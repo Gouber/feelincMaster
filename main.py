@@ -93,8 +93,7 @@ def get_stream(headers, set, bearer_token, ingester):
                     ingester.ingest(json_response)
                     print(json_response)
         except:
-            pass
-
+            print("Something went wrong")
 
 def main():
     # third_run()

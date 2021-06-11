@@ -31,9 +31,9 @@ class BinarySentimentalAnalysisTunnel(Tunnel):
             m = msg.value
             curated = self.utils.curate(m)
             buffer.append(curated)
-            if len(buffer) > 10:
+            if len(buffer) > 5:
                 tweets: List[TweetData] = self.annotate_tweets(buffer)
                 tweets = [dataclasses.asdict(t) for t in tweets]
                 self.collection.insert_many(tweets)
                 buffer = list()
-                print("Annotated 10")
+                print("Annotated 5")
