@@ -1,12 +1,12 @@
+import json
 import time
+import os
 
 import requests
-import os
-import json
+
 # from Ingester import Ingester
 # from Tunneler import Tunneler
 from Ingester import Ingester
-from testingTransformers import run, second_run, third_run
 from tunnels.BinarySentimentalAnalysisTunnel import BinarySentimentalAnalysisTunnel
 
 
@@ -74,7 +74,9 @@ def set_rules(headers, delete, bearer_token):
 
 
 def get_stream(headers, set, bearer_token, ingester):
-    # Ensures we just try to reconnect if anything goes wrong
+    #count = 0
+    #Uncomment commented code to see the reconnection being halted in periods of 15 minutes
+    #start_time = time.time()
     while True:
         try:
             response = requests.get(
@@ -92,8 +94,14 @@ def get_stream(headers, set, bearer_token, ingester):
                     json_response = json.loads(response_line)
                     ingester.ingest(json_response)
                     print(json_response)
+
         except:
+            #count += 1
             print("Something went wrong")
+            #if count == 15 and time.time() - start_time >= 900:
+            #    break
+        #else:
+            #count = 0
 
 def main():
     # third_run()
